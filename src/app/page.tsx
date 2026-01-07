@@ -36,6 +36,7 @@ export default function Home() {
   const [qrColors, setQrColors] = useState({
     background: "#ffffff",
     foreground: "#000000",
+    frameColor: "#000000",
     eyeRadius: 0,
     styleMode: "solid" as "solid" | "frame",
   });

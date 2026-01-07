@@ -24,6 +24,7 @@ interface ContactFormProps {
     foreground: string;
     eyeRadius: number;
     styleMode: "solid" | "frame";
+    frameColor: string;
   };
   setQrColors: React.Dispatch<
     React.SetStateAction<{
@@ -31,6 +32,7 @@ interface ContactFormProps {
       foreground: string;
       eyeRadius: number;
       styleMode: "solid" | "frame";
+      frameColor: string;
     }>
   >;
 }
@@ -379,6 +381,31 @@ export function ContactForm({
               />
             </div>
           </div>
+          {qrColors.styleMode === "frame" && (
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                Frame Color
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="color"
+                  value={qrColors.frameColor}
+                  onChange={(e) =>
+                    setQrColors({ ...qrColors, frameColor: e.target.value })
+                  }
+                  className="w-10 h-10 rounded cursor-pointer border-none bg-transparent"
+                />
+                <input
+                  type="text"
+                  value={qrColors.frameColor}
+                  onChange={(e) =>
+                    setQrColors({ ...qrColors, frameColor: e.target.value })
+                  }
+                  className="flex-1 p-2 rounded border border-neutral-300 dark:border-neutral-700 bg-transparent text-sm font-mono"
+                />
+              </div>
+            </div>
+          )}
           <div className="space-y-2 md:col-span-2">
             <div className="flex justify-between items-center">
               <label className="text-sm font-medium text-neutral-600 dark:text-neutral-400">

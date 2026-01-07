@@ -12,6 +12,7 @@ interface QRCodeDisplayProps {
     foreground: string;
     eyeRadius: number;
     styleMode: "solid" | "frame";
+    frameColor: string;
   };
 }
 
@@ -55,9 +56,14 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
       <div
         className={`relative transition-all duration-500 overflow-hidden ${
           qrColors.styleMode === "frame"
-            ? "p-10 bg-white rounded-3xl shadow-2xl border-8 border-neutral-900 dark:border-neutral-100"
+            ? "p-10 bg-white rounded-3xl shadow-2xl border-8"
             : "p-6 bg-white rounded-xl shadow-lg border border-neutral-100 dark:border-neutral-700"
         }`}
+        style={
+          qrColors.styleMode === "frame"
+            ? { borderColor: qrColors.frameColor }
+            : {}
+        }
       >
         <QRCode
           id="qr-code-canvas"
@@ -70,7 +76,10 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
           quietZone={10}
         />
         {qrColors.styleMode === "frame" && (
-          <div className="mt-4 text-center font-bold text-neutral-900 uppercase tracking-widest text-sm">
+          <div
+            className="mt-4 text-center font-bold uppercase tracking-widest text-sm"
+            style={{ color: qrColors.frameColor }}
+          >
             Scan Me
           </div>
         )}
