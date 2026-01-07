@@ -22,10 +22,90 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
   const isTooLarge = vcfLength > 2000; // General limit for QR scanners
 
   const downloadQR = () => {
-    const canvas = document.getElementById(
+    const qrCanvas = document.getElementById(
       "qr-code-canvas",
     ) as HTMLCanvasElement;
-    if (!canvas) return;
+    if (!qrCanvas) return;
+
+    // Create a composite canvas
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const qrSize = qrCanvas.width;
+    const padding = qrColors.styleMode === "frame" ? 40 : 24;
+    const borderWidth = qrColors.styleMode === "frame" ? 8 : 1;
+    const textHeight = qrColors.styleMode === "frame" ? 48 : 0;
+
+    const totalWidth = qrSize + (padding + borderWidth) * 2;
+    const totalHeight = qrSize + (padding + borderWidth) * 2 + textHeight;
+
+    canvas.width = totalWidth;
+    canvas.height = totalHeight;
+
+    // 1. Draw Background
+    ctx.fillStyle = qrColors.background;
+    ctx.fillRect(0, 0, totalWidth, totalHeight);
+
+    // 2. Draw Border (if frame)
+    if (qrColors.styleMode === "frame") {
+      ctx.strokeStyle = qrColors.frameColor;
+      ctx.lineWidth = borderWidth;
+      // Draw a rounded rectangle path
+      const r = 24; // radius
+      ctx.beginPath();
+      ctx.moveTo(borderWidth / 2 + r, borderWidth / 2);
+      ctx.lineTo(totalWidth - borderWidth / 2 - r, borderWidth / 2);
+      ctx.quadraticCurveTo(
+        totalWidth - borderWidth / 2,
+        borderWidth / 2,
+        totalWidth - borderWidth / 2,
+        borderWidth / 2 + r,
+      );
+      ctx.lineTo(
+        totalWidth - borderWidth / 2,
+        totalHeight - borderWidth / 2 - r,
+      );
+      ctx.quadraticCurveTo(
+        totalWidth - borderWidth / 2,
+        totalHeight - borderWidth / 2,
+        totalWidth - borderWidth / 2 - r,
+        totalHeight - borderWidth / 2,
+      );
+      ctx.lineTo(borderWidth / 2 + r, totalHeight - borderWidth / 2);
+      ctx.quadraticCurveTo(
+        borderWidth / 2,
+        totalHeight - borderWidth / 2,
+        borderWidth / 2,
+        totalHeight - borderWidth / 2 - r,
+      );
+      ctx.lineTo(borderWidth / 2, borderWidth / 2 + r);
+      ctx.quadraticCurveTo(
+        borderWidth / 2,
+        borderWidth / 2,
+        borderWidth / 2 + r,
+        borderWidth / 2,
+      );
+      ctx.stroke();
+    } else {
+      ctx.strokeStyle = "rgba(0,0,0,0.1)";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(0.5, 0.5, totalWidth - 1, totalHeight - 1);
+    }
+
+    // 3. Draw QR Code
+    ctx.drawImage(qrCanvas, padding + borderWidth, padding + borderWidth);
+
+    // 4. Draw Text (if frame)
+    if (qrColors.styleMode === "frame") {
+      ctx.fillStyle = qrColors.frameColor;
+      ctx.font = "bold 14px sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.letterSpacing = "2px";
+      ctx.fillText("SCAN ME", totalWidth / 2, totalHeight - padding);
+    }
+
     const pngFile = canvas.toDataURL("image/png");
     const downloadLink = document.createElement("a");
     downloadLink.download = `vcard-qr-${data.firstName}-${data.lastName}.png`;
@@ -56,14 +136,16 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
       <div
         className={`relative transition-all duration-500 overflow-hidden ${
           qrColors.styleMode === "frame"
-            ? "p-10 bg-white rounded-3xl shadow-2xl border-8"
-            : "p-6 bg-white rounded-xl shadow-lg border border-neutral-100 dark:border-neutral-700"
+            ? "p-10 rounded-3xl shadow-2xl border-8"
+            : "p-6 rounded-xl shadow-lg border border-neutral-100 dark:border-neutral-700"
         }`}
-        style={
-          qrColors.styleMode === "frame"
-            ? { borderColor: qrColors.frameColor }
-            : {}
-        }
+        style={{
+          backgroundColor: qrColors.background,
+          borderColor:
+            qrColors.styleMode === "frame"
+              ? qrColors.frameColor
+              : "transparent",
+        }}
       >
         <QRCode
           id="qr-code-canvas"
