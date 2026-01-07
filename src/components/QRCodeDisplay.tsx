@@ -139,6 +139,7 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
             ? "p-10 rounded-3xl shadow-2xl border-8"
             : "p-6 rounded-xl shadow-lg border border-neutral-100 dark:border-neutral-700"
         }`}
+        aria-label="QR Code live preview"
         style={{
           backgroundColor: qrColors.background,
           borderColor:
@@ -177,6 +178,8 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
       <div className="flex flex-col w-full gap-3 mt-4">
         <button
           onClick={downloadQR}
+          title="Download the QR code as a PNG image"
+          aria-label="Download QR Code as PNG"
           className="flex items-center justify-center gap-2 w-full p-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-all shadow-lg shadow-blue-500/20 active:scale-[0.98]"
         >
           <Download size={20} />
@@ -184,6 +187,8 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
         </button>
         <button
           onClick={downloadVCF}
+          title="Download the contact details as a .vcf file"
+          aria-label="Download VCF File"
           className="flex items-center justify-center gap-2 w-full p-4 bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-900 dark:text-neutral-100 rounded-xl font-medium transition-all active:scale-[0.98]"
         >
           <FileText size={20} />

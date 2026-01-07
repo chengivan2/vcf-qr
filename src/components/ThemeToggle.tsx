@@ -40,13 +40,14 @@ export function ThemeToggle() {
             <button
               key={t.name}
               onClick={() => setTheme(t.name)}
+              title={`Switch to ${t.name} theme`}
               className={cn(
                 "p-2 rounded-full transition-all duration-200 flex items-center justify-center",
                 isActive
                   ? "bg-white dark:bg-neutral-700 shadow-sm text-neutral-900 dark:text-neutral-100"
                   : "text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200",
               )}
-              aria-label={`Switch to ${t.name} theme`}
+              aria-label={`Current theme: ${theme}. Click to switch to ${t.name} theme.`}
             >
               <Icon size={18} />
             </button>

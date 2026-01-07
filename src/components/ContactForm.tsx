@@ -143,6 +143,8 @@ export function ContactForm({
           </h2>
           <button
             onClick={() => addField("emails")}
+            title="Add another email address"
+            aria-label="Add another email address"
             className="p-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 hover:scale-110 transition-transform"
           >
             <Plus size={20} />
@@ -171,6 +173,8 @@ export function ContactForm({
               />
               <button
                 onClick={() => removeField("emails", index)}
+                title="Remove this email address"
+                aria-label={`Remove email address ${index + 1}`}
                 className="p-3 text-neutral-400 hover:text-red-500 transition-colors"
                 disabled={data.emails.length <= 1}
               >
@@ -190,6 +194,8 @@ export function ContactForm({
           </h2>
           <button
             onClick={() => addField("phones")}
+            title="Add another phone number"
+            aria-label="Add another phone number"
             className="p-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 hover:scale-110 transition-transform"
           >
             <Plus size={20} />
@@ -218,6 +224,8 @@ export function ContactForm({
               />
               <button
                 onClick={() => removeField("phones", index)}
+                title="Remove this phone number"
+                aria-label={`Remove phone number ${index + 1}`}
                 className="p-3 text-neutral-400 hover:text-green-500 transition-colors"
                 disabled={data.phones.length <= 1}
               >
@@ -312,6 +320,8 @@ export function ContactForm({
         <div className="flex bg-neutral-100 dark:bg-neutral-800 p-1 rounded-xl w-fit">
           <button
             onClick={() => setQrColors({ ...qrColors, styleMode: "solid" })}
+            title="Switch to solid QR style"
+            aria-label="Switch to solid QR style"
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               qrColors.styleMode === "solid"
                 ? "bg-white dark:bg-neutral-700 shadow-sm text-blue-600 dark:text-blue-400"
@@ -323,6 +333,8 @@ export function ContactForm({
           </button>
           <button
             onClick={() => setQrColors({ ...qrColors, styleMode: "frame" })}
+            title="Switch to framed QR style"
+            aria-label="Switch to framed QR style"
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               qrColors.styleMode === "frame"
                 ? "bg-white dark:bg-neutral-700 shadow-sm text-blue-600 dark:text-blue-400"
@@ -343,6 +355,8 @@ export function ContactForm({
               <input
                 type="color"
                 value={qrColors.background}
+                title="Choose background color"
+                aria-label="Choose background color"
                 onChange={(e) =>
                   setQrColors({ ...qrColors, background: e.target.value })
                 }
@@ -366,6 +380,8 @@ export function ContactForm({
               <input
                 type="color"
                 value={qrColors.foreground}
+                title="Choose pattern color"
+                aria-label="Choose pattern color"
                 onChange={(e) =>
                   setQrColors({ ...qrColors, foreground: e.target.value })
                 }
@@ -390,6 +406,8 @@ export function ContactForm({
                 <input
                   type="color"
                   value={qrColors.frameColor}
+                  title="Choose frame color"
+                  aria-label="Choose frame color"
                   onChange={(e) =>
                     setQrColors({ ...qrColors, frameColor: e.target.value })
                   }
@@ -421,6 +439,8 @@ export function ContactForm({
               max="50"
               step="1"
               value={qrColors.eyeRadius}
+              title="Adjust eye border radius"
+              aria-label={`Adjust eye border radius: current value ${qrColors.eyeRadius}%`}
               onChange={(e) =>
                 setQrColors({
                   ...qrColors,

@@ -84,6 +84,8 @@ export default function Home() {
             </div>
             <a
               href="mailto:ivan@ivanthedev.pro"
+              title="Send an email to ivanthedev"
+              aria-label="Send feedback via email to ivan@ivanthedev.pro"
               className="text-sm text-neutral-500 hover:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-400 transition-colors flex items-center gap-2"
             >
               Send feedback to{" "}
