@@ -75,14 +75,25 @@ export default function Home() {
 
       <footer className="border-t border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 py-12">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-2 text-neutral-900 dark:text-neutral-100 font-bold text-xl">
-            <div className="p-2 bg-blue-600 text-white rounded-lg">
-              <QrCode size={24} />
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <div className="flex items-center gap-2 text-neutral-900 dark:text-neutral-100 font-bold text-xl">
+              <div className="p-2 bg-blue-600 text-white rounded-lg">
+                <QrCode size={24} />
+              </div>
+              QRVCF
             </div>
-            QRVCF
+            <a
+              href="mailto:ivan@ivanthedev.pro"
+              className="text-sm text-neutral-500 hover:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-400 transition-colors flex items-center gap-2"
+            >
+              Send feedback to{" "}
+              <span className="font-semibold text-neutral-700 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                ivanthedev
+              </span>
+            </a>
           </div>
           <ThemeToggle />
-          <p className="text-sm text-neutral-500 dark:text-neutral-400">
+          <p className="text-sm text-neutral-500 dark:text-neutral-400 text-center md:text-right">
             &copy; {new Date().getFullYear()} QRVCF Generator. Privacy first,
             all data stays in your browser.
           </p>
