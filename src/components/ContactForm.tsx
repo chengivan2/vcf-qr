@@ -17,8 +17,12 @@ import type { ContactData } from "@/lib/vcf";
 interface ContactFormProps {
   data: ContactData;
   setData: (data: ContactData) => void;
-  qrColors: { background: string; foreground: string };
-  setQrColors: (colors: { background: string; foreground: string }) => void;
+  qrColors: { background: string; foreground: string; eyeRadius: number };
+  setQrColors: (colors: {
+    background: string;
+    foreground: string;
+    eyeRadius: number;
+  }) => void;
 }
 
 export function ContactForm({
@@ -292,7 +296,7 @@ export function ContactForm({
         <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
           QR Customization
         </h2>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
               Background
@@ -338,6 +342,30 @@ export function ContactForm({
                 className="flex-1 p-2 rounded border border-neutral-300 dark:border-neutral-700 bg-transparent text-sm font-mono"
               />
             </div>
+          </div>
+          <div className="space-y-2 md:col-span-2">
+            <div className="flex justify-between items-center">
+              <label className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                Eye Border Radius
+              </label>
+              <span className="text-xs font-mono text-neutral-500">
+                {qrColors.eyeRadius}%
+              </span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="50"
+              step="1"
+              value={qrColors.eyeRadius}
+              onChange={(e) =>
+                setQrColors({
+                  ...qrColors,
+                  eyeRadius: parseInt(e.target.value),
+                })
+              }
+              className="w-full h-2 bg-neutral-200 dark:bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-blue-600"
+            />
           </div>
         </div>
       </section>

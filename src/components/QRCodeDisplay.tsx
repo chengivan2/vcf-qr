@@ -1,13 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { QRCodeSVG } from "qrcode.react";
-import { Download, FileText, Share2, CornerRightUp } from "lucide-react";
+import { QRCode } from "react-qrcode-logo";
+import { Download, FileText } from "lucide-react";
 import { generateVCF, type ContactData } from "@/lib/vcf";
 
 interface QRCodeDisplayProps {
   data: ContactData;
-  qrColors: { background: string; foreground: string };
+  qrColors: { background: string; foreground: string; eyeRadius: number };
 }
 
 export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
@@ -16,23 +16,15 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
   const isTooLarge = vcfLength > 2000; // General limit for QR scanners
 
   const downloadQR = () => {
-    const svg = document.getElementById("qr-code-svg");
-    if (!svg) return;
-    const svgData = new XMLSerializer().serializeToString(svg);
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    const img = new Image();
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx?.drawImage(img, 0, 0);
-      const pngFile = canvas.toDataURL("image/png");
-      const downloadLink = document.createElement("a");
-      downloadLink.download = `vcard-qr-${data.firstName}-${data.lastName}.png`;
-      downloadLink.href = pngFile;
-      downloadLink.click();
-    };
-    img.src = "data:image/svg+xml;base64," + btoa(svgData);
+    const canvas = document.getElementById(
+      "qr-code-canvas",
+    ) as HTMLCanvasElement;
+    if (!canvas) return;
+    const pngFile = canvas.toDataURL("image/png");
+    const downloadLink = document.createElement("a");
+    downloadLink.download = `vcard-qr-${data.firstName}-${data.lastName}.png`;
+    downloadLink.href = pngFile;
+    downloadLink.click();
   };
 
   const downloadVCF = () => {
@@ -55,15 +47,16 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
         </p>
       </div>
 
-      <div className="relative p-6 bg-white rounded-xl shadow-lg border border-neutral-100 dark:border-neutral-700">
-        <QRCodeSVG
-          id="qr-code-svg"
+      <div className="relative p-6 bg-white rounded-xl shadow-lg border border-neutral-100 dark:border-neutral-700 overflow-hidden">
+        <QRCode
+          id="qr-code-canvas"
           value={vcfString}
           size={256}
-          level="M"
-          includeMargin={true}
           bgColor={qrColors.background}
           fgColor={qrColors.foreground}
+          eyeRadius={qrColors.eyeRadius}
+          qrStyle="squares"
+          quietZone={10}
         />
         {isTooLarge && (
           <div className="absolute inset-0 bg-red-500/10 backdrop-blur-[2px] rounded-xl flex items-center justify-center p-4">
