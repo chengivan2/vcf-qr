@@ -11,18 +11,28 @@ import {
   MapPin,
   Globe,
   Notebook,
+  Square,
+  Frame,
 } from "lucide-react";
 import type { ContactData } from "@/lib/vcf";
 
 interface ContactFormProps {
   data: ContactData;
   setData: (data: ContactData) => void;
-  qrColors: { background: string; foreground: string; eyeRadius: number };
-  setQrColors: (colors: {
+  qrColors: {
     background: string;
     foreground: string;
     eyeRadius: number;
-  }) => void;
+    styleMode: "solid" | "frame";
+  };
+  setQrColors: React.Dispatch<
+    React.SetStateAction<{
+      background: string;
+      foreground: string;
+      eyeRadius: number;
+      styleMode: "solid" | "frame";
+    }>
+  >;
 }
 
 export function ContactForm({
@@ -296,6 +306,32 @@ export function ContactForm({
         <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
           QR Customization
         </h2>
+
+        <div className="flex bg-neutral-100 dark:bg-neutral-800 p-1 rounded-xl w-fit">
+          <button
+            onClick={() => setQrColors({ ...qrColors, styleMode: "solid" })}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              qrColors.styleMode === "solid"
+                ? "bg-white dark:bg-neutral-700 shadow-sm text-blue-600 dark:text-blue-400"
+                : "text-neutral-500 hover:text-neutral-700 dark:text-neutral-400"
+            }`}
+          >
+            <Square size={16} />
+            Solid
+          </button>
+          <button
+            onClick={() => setQrColors({ ...qrColors, styleMode: "frame" })}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              qrColors.styleMode === "frame"
+                ? "bg-white dark:bg-neutral-700 shadow-sm text-blue-600 dark:text-blue-400"
+                : "text-neutral-500 hover:text-neutral-700 dark:text-neutral-400"
+            }`}
+          >
+            <Frame size={16} />
+            Frame
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="text-sm font-medium text-neutral-600 dark:text-neutral-400">

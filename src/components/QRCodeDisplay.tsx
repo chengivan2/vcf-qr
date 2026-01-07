@@ -7,7 +7,12 @@ import { generateVCF, type ContactData } from "@/lib/vcf";
 
 interface QRCodeDisplayProps {
   data: ContactData;
-  qrColors: { background: string; foreground: string; eyeRadius: number };
+  qrColors: {
+    background: string;
+    foreground: string;
+    eyeRadius: number;
+    styleMode: "solid" | "frame";
+  };
 }
 
 export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
@@ -47,7 +52,13 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
         </p>
       </div>
 
-      <div className="relative p-6 bg-white rounded-xl shadow-lg border border-neutral-100 dark:border-neutral-700 overflow-hidden">
+      <div
+        className={`relative transition-all duration-500 overflow-hidden ${
+          qrColors.styleMode === "frame"
+            ? "p-10 bg-white rounded-3xl shadow-2xl border-8 border-neutral-900 dark:border-neutral-100"
+            : "p-6 bg-white rounded-xl shadow-lg border border-neutral-100 dark:border-neutral-700"
+        }`}
+      >
         <QRCode
           id="qr-code-canvas"
           value={vcfString}
@@ -58,6 +69,11 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
           qrStyle="squares"
           quietZone={10}
         />
+        {qrColors.styleMode === "frame" && (
+          <div className="mt-4 text-center font-bold text-neutral-900 uppercase tracking-widest text-sm">
+            Scan Me
+          </div>
+        )}
         {isTooLarge && (
           <div className="absolute inset-0 bg-red-500/10 backdrop-blur-[2px] rounded-xl flex items-center justify-center p-4">
             <div className="bg-red-500 text-white text-xs px-2 py-1 rounded shadow-lg text-center">
