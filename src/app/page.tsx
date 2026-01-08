@@ -67,7 +67,7 @@ export default function Home() {
               setQrColors={setQrColors}
             />
           </div>
-          <div className="lg:col-span-1 order-1 lg:order-2 sticky top-8">
+          <div className="lg:col-span-1 order-1 lg:order-2 lg:sticky lg:top-8">
             <QRCodeDisplay data={data} qrColors={qrColors} />
           </div>
         </div>

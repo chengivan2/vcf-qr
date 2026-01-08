@@ -123,7 +123,7 @@ export function QRCodeDisplay({ data, qrColors }: QRCodeDisplayProps) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 p-8 bg-neutral-50 dark:bg-neutral-800/50 rounded-2xl border border-neutral-200 dark:border-neutral-700 sticky top-8">
+    <div className="flex flex-col items-center gap-6 p-8 bg-neutral-50 dark:bg-neutral-800/50 rounded-2xl border border-neutral-200 dark:border-neutral-700">
       <div className="text-center space-y-2">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
           Live Preview
