@@ -88,7 +88,7 @@ export default function Home() {
               aria-label="Send feedback via email to ivan@ivanthedev.pro"
               className="text-sm text-neutral-500 hover:text-blue-600 dark:text-neutral-400 dark:hover:text-blue-400 transition-colors flex items-center gap-2"
             >
-              Send feedback to{" "}
+              Send feedback to
               <span className="font-semibold text-neutral-700 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 ivanthedev
               </span>
