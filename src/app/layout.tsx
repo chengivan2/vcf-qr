@@ -15,7 +15,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "VCF QR Code Generator",
-  description: "Generate QR codes for VCF files",
+  description: "Generate offline-ready QR codes for VCF files",
+  openGraph: {
+    title: "VCF QR Code Generator",
+    description: "Generate offline-ready QR codes for VCF files",
+  },
 };
 
 export default function RootLayout({
