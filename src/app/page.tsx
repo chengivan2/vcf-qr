@@ -7,6 +7,7 @@ import { QRCodeDisplay } from "@/components/QRCodeDisplay";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import type { ContactData } from "@/lib/vcf";
 import { Sparkles, QrCode } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   const [data, setData] = useState<ContactData>({
@@ -77,8 +78,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex flex-col items-center md:items-start gap-4">
             <div className="flex items-center gap-2 text-neutral-900 dark:text-neutral-100 font-bold text-xl">
-              <div className="p-2 bg-blue-600 text-white rounded-lg">
-                <QrCode size={24} />
+              <div className="relative w-10 h-10 overflow-hidden rounded-lg">
+                <Image
+                  src="/vcfqrmainlogo.png"
+                  alt="QRVCF Logo"
+                  fill
+                  className="object-cover"
+                />
               </div>
               QRVCF
             </div>
